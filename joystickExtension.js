@@ -69,7 +69,7 @@ new (function() {
             ['r', 'get CloudProfessor %m.USBPart', 'readUSB', 'getGPIO']
         ],
         menus: {
-            joystickPart: ['getGPIO', 'getArduino', 'getUSB', 'getPWM']
+            USBPart: ['getGPIO', 'getArduino', 'getUSB', 'getPWM']
         }
     };
     ScratchExtensions.register('CloudProfessor', descriptor, ext, {type: 'hid', vendor:0x054c, product:0x0268});
