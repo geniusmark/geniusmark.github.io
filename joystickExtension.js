@@ -69,8 +69,8 @@ new (function() {
             ['r', 'get joystick %m.joystickPart', 'readJoystick', 'leftX']
         ],
         menus: {
-            joystickPart: ['leftX', 'leftY', 'rightX', 'rightY']
+            joystickPart: ['getGPIO', 'getArduino', 'getUSB', 'getPWM']
         }
     };
-    ScratchExtensions.register('Joystick', descriptor, ext, {type: 'hid', vendor:0x054c, product:0x0268});
+    ScratchExtensions.register('CloudProfessor', descriptor, ext, {type: 'hid', vendor:0x054c, product:0x0268});
 })();
