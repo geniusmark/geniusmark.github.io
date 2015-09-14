@@ -66,7 +66,7 @@ new (function() {
 
     var descriptor = {
         blocks: [
-            ['r', 'get joystick %m.joystickPart', 'readJoystick', 'leftX']
+            ['r', 'get CloudProfessor %m.USBPart', 'readUSB', 'getGPIO']
         ],
         menus: {
             joystickPart: ['getGPIO', 'getArduino', 'getUSB', 'getPWM']
