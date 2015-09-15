@@ -43,7 +43,7 @@ new (function() {
     }
 
     ext._getStatus = function() {
-        if(!device) return {status: 1, msg: 'Controller disconnected'};
+        //if(!device) return {status: 1, msg: 'Controller disconnected'};
         return {status: 2, msg: 'Controller connected'};
     }
 
