@@ -30,8 +30,10 @@ new (function() {
     // Block and block menu descriptions
     var descriptor = {
         blocks: [
-            ['R', 'CloudProfessor %s', 'get_gpio', 'GetGPIO'],
-        ]
+            ['r', 'CloudProfessor %m.getUSB', 'get_gpio', 'GetGPIO'],
+        ],
+        menus: {
+            getUSB: ['getGPIO', 'getPWM', 'getI2C', 'getGPIO']
     };
 
     // Register the extension
