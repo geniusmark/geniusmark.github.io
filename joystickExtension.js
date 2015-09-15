@@ -34,6 +34,7 @@ new (function() {
         ],
         menus: {
             getUSB: ['getGPIO', 'getPWM', 'getI2C', 'getGPIO']
+        }
     };
 
     // Register the extension
