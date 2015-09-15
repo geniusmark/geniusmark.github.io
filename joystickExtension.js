@@ -10,37 +10,7 @@ new (function() {
     var poller = null;
     var ext = this;
 
-    ext._deviceConnected = function(dev) {
-        if(device) return;
-
-        device = dev;
-        device.open();
-
-        poller = setInterval(function() {
-            input = device.read(48);
-        }, 10);
-
-//        setInterval(function() { console.log(input); }, 100);
-    };
-
-    ext._deviceRemoved = function(dev) {
-        if(device != dev) return;
-        device = null;
-        stopPolling();
-    };
-
-    function stopPolling() {
-        if(poller) clearInterval(poller);
-        poller = null;
-    }
-
-    ext._shutdown = function() {
-        if(poller) clearInterval(poller);
-        poller = null;
-
-        if(device) device.close();
-        device = null;
-    }
+    ext._shutdown = function() {}
 
     ext._getStatus = function() {
         //if(!device) return {status: 1, msg: 'Controller disconnected'};
@@ -49,7 +19,7 @@ new (function() {
 
     // Converts a byte into a value of the range -1 -> 1 with two decimal places of precision
     function convertByteStr(byte) { return (parseInt(byte, 16) - 128) / 128; }
-    ext.readJoystick = function(name) {
+    ext.readUSB = function(name) {
         var retval = null;
         switch(name) {
             case 'leftX': retval = convertByteStr(input[12] + input[13]); break;
@@ -66,7 +36,7 @@ new (function() {
 
     var descriptor = {
         blocks: [
-            ['r', 'get CloudProfessor %m.USBPart', 'readUSB', 'getGPIO']
+            ['R', 'get CloudProfessor %m.USBPart', 'readUSB', 'getGPIO']
         ],
         menus: {
             USBPart: ['getGPIO', 'getArduino', 'getUSB', 'getPWM']
