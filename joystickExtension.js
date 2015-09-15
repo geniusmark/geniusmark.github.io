@@ -35,5 +35,5 @@ new (function() {
     };
 
     // Register the extension
-    ScratchExtensions.register('Weather extension', descriptor, ext);
+    ScratchExtensions.register('CloudProfessor extension', descriptor, ext);
 })();
