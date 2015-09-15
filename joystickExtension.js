@@ -1,46 +1,39 @@
-// joystickExtension.js
-// Shane M. Clements, November 2013
-// Joystick Scratch Extension
-//
-// This is an extension for development and testing of the Scratch Javascript Extension API.
+/* Extension demonstrating a blocking reporter block */
+/* Sayamindu Dasgupta <sayamindu@media.mit.edu>, May 2014 */
+
 
 new (function() {
-    var device = null;
-    var input = null;
-    var poller = null;
     var ext = this;
 
-    ext._shutdown = function() {}
+    // Cleanup function when the extension is unloaded
+    ext._shutdown = function() {};
 
+    // Status reporting code
+    // Use this to report missing hardware, plugin or unsupported browser
     ext._getStatus = function() {
-        //if(!device) return {status: 1, msg: 'Controller disconnected'};
-        return {status: 2, msg: 'Controller connected'};
-    }
+        return {status: 2, msg: 'Ready'};
+    };
 
-    // Converts a byte into a value of the range -1 -> 1 with two decimal places of precision
-    function convertByteStr(byte) { return (parseInt(byte, 16) - 128) / 128; }
-    ext.readUSB = function(name) {
-        var retval = null;
-        switch(name) {
-            case 'leftX': retval = convertByteStr(input[12] + input[13]); break;
-            case 'leftY': retval = -convertByteStr(input[14] + input[15]); break;
-            case 'rightX': retval = convertByteStr(input[16] + input[17]); break;
-            case 'rightY': retval = -convertByteStr(input[18] + input[19]); break;
-        }
+    ext.get_gpio = function(location, callback) {
+        // Make an AJAX call to the Open Weather Maps API
+        $.ajax({
+              url: 'http://api.openweathermap.org/data/2.5/weather?q='+location+'&units=imperial',
+              dataType: 'jsonp',
+              success: function( weather_data ) {
+                  // Got the data - parse it and return the temperature
+                  temperature = weather_data['main']['temp'];
+                  callback(temperature);
+              }
+        });
+    };
 
-        // If it's hardly off center then treat it as centered
-        if(Math.abs(retval) < 0.1) retval = 0;
-
-        return retval.toFixed(2);
-    }
-
+    // Block and block menu descriptions
     var descriptor = {
         blocks: [
-            ['R', 'get CloudProfessor %m.USBPart', 'readUSB', 'getGPIO']
-        ],
-        menus: {
-            USBPart: ['getGPIO', 'getArduino', 'getUSB', 'getPWM']
-        }
+            ['R', 'CloudProfessor %s', 'get_gpio', 'GetGPIO'],
+        ]
     };
-    ScratchExtensions.register('CloudProfessor', descriptor, ext, {type: 'hid', vendor:0x054c, product:0x0268});
+
+    // Register the extension
+    ScratchExtensions.register('Weather extension', descriptor, ext);
 })();
